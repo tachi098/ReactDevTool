@@ -1,12 +1,12 @@
-import { Button, FormControl, FormHelperText, Input, InputLabel, TextField } from "@material-ui/core"
-import { useForm } from "react-hook-form";
+import { Button, FormControl, FormHelperText, Input, InputLabel } from "@material-ui/core"
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addEmployees } from "../../../store/actions/EmoloyeeAction";
 
 const EmployeeAdd = () => {
     const dispatch = useDispatch();
-    const { register, formState: { errors }, handleSubmit, setValue } = useForm({
+    const { register, formState: { errors }, handleSubmit, control } = useForm({
         defaultValues: {
             birthday: "2017-05-24"
         }
@@ -58,18 +58,14 @@ const EmployeeAdd = () => {
                         }
                     </FormControl>
                     <FormControl style={{ margin: 12 }} fullWidth>
-                        <TextField
-                            id="date"
-                            label="Ngày sinh"
-                            fullWidth
-                            type="date"
-                            defaultValue="2017-05-24"
-                            {...register("birthday")}
-                            onChange={e => {setValue("birthday", e.target.value)}}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
+                    <FormControl style={{ margin: 12 }} fullWidth>
+                        <Controller
+                            name="birthday"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => <Input type="date" {...field} />}
                         />
+                    </FormControl>
                     </FormControl>
                     <Button type="submit" style={{ margin: 12 }} variant="contained" color="primary">
                         Tạo mới
